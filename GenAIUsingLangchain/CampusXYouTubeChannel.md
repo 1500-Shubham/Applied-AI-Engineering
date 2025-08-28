@@ -4,7 +4,7 @@
     - User Perspective : Agent AI, RAG(LLM use own wok pipeline create), Vector Databases, Prompt Engineering, Fine Tuning
     - Builder Perspective : Pretraining, Quantization,FineTuning
 
-# Builder Perspective (Create Foundation Model)
+# Builder Perspective (Create Foundation Model) : Data Scientist
 - Transformer Architecture
 - Types of Transformer Encoder(BERT) and Decoder(GPT)
 - Pretraining - Training objectives, tokenization strategies
@@ -12,7 +12,7 @@
 - Fine-Tuning - Task Specific(Performance improve), Instruction Tuning and Continual pretraining
 - Evaluation and Deployment
 
-# User Perspective (Use Foundation Model)
+# User Perspective (Use Foundation Model) : Software Developers
 - Building Basic LLM - APIS LLM : Langchain Hugging Face, Ollama
 - Improving LLM Response
     - Prompt Engineering
