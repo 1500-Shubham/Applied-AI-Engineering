@@ -49,7 +49,9 @@
     - interface which help in interacting AI Models (APIS Like)
     - standard interface diya OPENAI APIS or CLAUSE APIS inko integrate karne ka simple tarika
     - Differnet models use in interface (WEBSITE GIVEN Langchain) way
-        - LLM (text in text out)
+        -Language Models
+            - LLM (text in text out)
+            - Chat Models
         - Embedding Models
         (text in vector feature out). Useful in semantic search
 - 2) Prompts
@@ -84,3 +86,19 @@
         - Multiply Delhi temp by 3
         - Extract Meaning: Delhi Temp -> tool
         - Extract Meaning: multiple 3 -> calculator tool
+
+## Langchain Models
+- Language Models (All Code inside folder)
+    - LLMs
+        - general purpose model: text generazation, summarization, code questions answer
+        - single Text in and single Text out
+        - trained on text books 
+        - GPT 3
+    - Chat Models
+        - conversational task. multiple messages as input
+        - memory and context rakhta hai 
+        - trained on text and fine tuned on chat datasets
+        - understands system user and assistant roles
+            - you are qualified doctor bata ke data se output
+        - conversation AI, AI tutors
+        - GPT 4
