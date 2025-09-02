@@ -109,7 +109,7 @@
     - Text Based - String used for communication
     - Multimodal : Image , Text, Video
 - Prompt important as it decides output from LLM.
-- Static vs Dynamic Prompt
+- Static vs Dynamic Prompt : PromptTemplate
     - created different files for this
     - dynamic has {} input accoring change the nature
         - Create Template Prompt Class
@@ -118,7 +118,7 @@
             - Prompt Template Reusable save in template.json and load anywhere
             - Prompt validation kar lega automatically
         - Create prompt generator and template py file for easiness
-- Messages in Prompt : Useful in creating Chatbots conversational
+- Messages in Prompt : Useful in creating Chatbots conversational : ChatPromptTemplate
     - Static Messages
         - SystemMessages
         - HumanMessages
