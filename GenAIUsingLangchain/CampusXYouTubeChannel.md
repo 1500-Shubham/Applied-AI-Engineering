@@ -102,3 +102,34 @@
             - you are qualified doctor bata ke data se output
         - conversation AI, AI tutors
         - GPT 4
+
+## Langchain Prompts
+- input instruction or queries to a model to give output
+- Two Types:
+    - Text Based - String used for communication
+    - Multimodal : Image , Text, Video
+- Prompt important as it decides output from LLM.
+- Static vs Dynamic Prompt
+    - created different files for this
+    - dynamic has {} input accoring change the nature
+        - Create Template Prompt Class
+            - Through we could have use string and placeholder 
+            - Using Prompt Template is a standarized way toh 
+            - Prompt Template Reusable save in template.json and load anywhere
+            - Prompt validation kar lega automatically
+        - Create prompt generator and template py file for easiness
+- Messages in Prompt : Useful in creating Chatbots conversational
+    - Static Messages
+        - SystemMessages
+        - HumanMessages
+        - AI Messages
+        - Created messages.py to understand these three types
+        - Instead of hardcoding System Human AI use these messages to chat with LLM 
+    - Dynamic Messages : ChatPromptTemplate
+        - ex. System Message: you are expert in {{domain}} dynamic kar raha mai
+        - Human Message : Explain {topic}
+    - Message Placeholder : used inside ChatPromptTemplate to dynamically insert chat history or list of messages during runtime
+        - While building chatbots: chat history generally stored
+        - Solve this problem: All History is stores as message placeholder
+    - ChatPromptTemplate use this messagePlaceholder (for history)
+    - see message_placeholder.py for the basic code
