@@ -133,3 +133,29 @@
         - Solve this problem: All History is stores as message placeholder
     - ChatPromptTemplate use this messagePlaceholder (for history)
     - see message_placeholder.py for the basic code
+
+## Langchain Structured Output
+- LLM can interact with Database, APIS, other systems (because of structure output)
+- Practice in which LLM can return data in strucutre format like JSON, can help integrate with other tools with LLM.
+    - Use Cases: AI Agents(other tools input format ke hisab se), DataExtraction(LLM output store in Database with your table type), 
+- Generally LLM input text and ouput unstructed output simply text 
+- Want Json enforced output {"even1":"msg1", like this in structure way}
+### Two Types of LLMS based on output
+- LLM generating structured output -> with_structured_output fucntion
+    - before model.invoke use this method
+    - Format declare : Typed Dict, Pydantic, Json_Schema
+        - Typed Dict: Define keys and values should exist, ensures dictinoary in python looks like, but jaruri nahi LLM return in that format
+            - Tell Class Person {name: String, age:Int}  now no ambiguity
+            - LLM internally generates a prompt statign the keys of typed dict and return in that way
+        - Pydantic: data validation and data parsing library in Python. Ensures data you work is correct, structured and type-safe
+            - Basic example
+            - Defaul Values
+            - Optional Fields
+            - Type Coerve auto conversion
+            - Built in validataion ex. email
+            - Constrain like this range using Field Fucntion (constrain, description)
+            - Can convert pydantic to dict or json
+        - Json Schema: If multiple backend sprinboot and python universal data format
+            - pydantic or typed dict only python
+            
+- Not generating structured output -> Output Parsers function

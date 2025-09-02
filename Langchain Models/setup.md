@@ -3,7 +3,7 @@
 3. python -m venv venv
 4. source venv/bin/activate
 5. requirement.txt
-6. pip install -r requirements.txt
+6. pip install -r requirement.txt
 7. verify langchain installation
 8- Run any file python test.py
 
