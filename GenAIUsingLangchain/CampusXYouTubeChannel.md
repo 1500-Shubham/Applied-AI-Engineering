@@ -141,7 +141,7 @@
 - Generally LLM input text and ouput unstructed output simply text 
 - Want Json enforced output {"even1":"msg1", like this in structure way}
 ### Two Types of LLMS based on output
-- LLM generating structured output -> with_structured_output fucntion
+##### 1) LLM generating structured output -> with_structured_output fucntion
     - before model.invoke use this method
     - Format declare : Typed Dict, Pydantic, Json_Schema
         - Typed Dict: Define keys and values should exist, ensures dictinoary in python looks like, but jaruri nahi LLM return in that format
@@ -158,4 +158,25 @@
         - Json Schema: If multiple backend sprinboot and python universal data format
             - pydantic or typed dict only python
             
-- Not generating structured output -> Output Parsers function
+##### 2) LLM's Not generating (Open Source) structured output -> Output Parsers function
+- Output Parser in Langchai raw LLM Responses into structered formats like JSON, CSV, Pydnatic models and more.
+- can be used along with LLM returning structured output (with_Structure function replace) and LLM not wale case
+- Types Of Output Parser Mainly used in Langchain
+    - 1) String 
+        - indirectly uses result.content (normal response from LLM)
+        - useful in creating chains baar baar result.content ko paas na karna ho next template mein
+    - 2) Json 
+        - Forces LLM to return json format
+         response
+        - With Prompt Template send this parser as a variable, partial variable(since not filled during runtime) see code
+        - Parser parses result.content into json
+        - Problem: Json return hoga but not a fixed schema, yeh key aur aise values do mereko
+            - Solution: Use structured output parser
+    - 3) Structured 
+        - Extract Structured Json based on predefined fixed schema 
+        - Problem: Can't Do Data Validation, maine bola schema {age ,name, city} wanted {str,str,int} ho but koi tarika nahi only prompt mein likh sakta but llm zaruri nahi waise ho
+            - Solution: Use Pydantic
+    - 4) Pydantic (Best)
+        - Is Structured Output parser with use of Pydantic Models to form schema which ensures data validation
+
+
