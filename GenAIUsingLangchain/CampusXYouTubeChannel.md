@@ -179,4 +179,17 @@
     - 4) Pydantic (Best)
         - Is Structured Output parser with use of Pydantic Models to form schema which ensures data validation
 
+## Chains in Langchain
+- What and Why
+    - Application is build in steps 1st response 2nd response dependent on 1st 
+    - prompt - llm - response - process - output to user
+    - Problem: Each step manually handle, prompt design, user input, response, then usme se pakde kafi lengthy process
+    - Chains Pipeline create (Prompt design send to llm and send the output to another) each step output works as input to next step
+    - input - pipeline - output thats it
+    - linear sequential example hai yeh
+- Types of Chain See Code easy to understand
+    - 1) Linear
+    - 2) Parallel
+    - 3) Conditional
+
 
