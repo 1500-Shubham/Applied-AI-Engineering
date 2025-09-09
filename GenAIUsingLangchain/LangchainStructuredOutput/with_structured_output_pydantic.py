@@ -6,6 +6,10 @@ from pydantic import BaseModel, Field
 load_dotenv()
 
 llm = HuggingFaceEndpoint(repo_id="deepseek-ai/DeepSeek-V3.1", task="text-generation")
+# llm = HuggingFaceEndpoint(
+#     repo_id="google/gemma-2-2b-it",
+#     task="text-generation"
+# )
 model= ChatHuggingFace(llm=llm)
 
 # schema
@@ -14,7 +18,7 @@ class Review(BaseModel):
     # Field(description="description", default=value, ge=value, le=value)
     key_themes: list[str] = Field(description="Write down all the key themes discussed in the review in a list")
     summary: str = Field(description="A brief summary of the review")
-    sentiment: Literal["pos", "neg"] = Field(description="Return sentiment of the review either negative, positive or neutral")
+    sentiment: Literal["pos", "neg"] = Field(description="Return sentiment of the review either negative, positive")
     pros: Optional[list[str]] = Field(default=None, description="Write down all the pros inside a list")
     cons: Optional[list[str]] = Field(default=None, description="Write down all the cons inside a list")
     name: Optional[str] = Field(default=None, description="Write the name of the reviewer")

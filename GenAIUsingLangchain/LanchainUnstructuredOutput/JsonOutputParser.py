@@ -8,7 +8,7 @@ load_dotenv()
 
 # Define the model
 llm = HuggingFaceEndpoint(
-    repo_id="google/gemma-2-2b-it",
+    repo_id="swiss-ai/Apertus-8B-Instruct-2509",
     task="text-generation"
 )
 

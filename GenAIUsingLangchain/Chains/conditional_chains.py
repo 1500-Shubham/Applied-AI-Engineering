@@ -25,7 +25,6 @@ model= ChatHuggingFace(llm=llm)
 parser = StrOutputParser()
 
 class Feedback(BaseModel):
-
     sentiment: Literal['positive', 'negative'] = Field(description='Give the sentiment of the feedback')
 
 parser2 = PydanticOutputParser(pydantic_object=Feedback)
@@ -61,6 +60,7 @@ branch_chain = RunnableBranch(
 )
 
 chain = classifier_chain | branch_chain
+
 
 print(chain.invoke({'feedback': 'This is a beautiful phone'}))
 
