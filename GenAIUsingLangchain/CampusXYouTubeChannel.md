@@ -192,4 +192,52 @@
     - 2) Parallel
     - 3) Conditional
 
+## Runnables in Langchain
+- How chains work internally, they are created using Runnables
 
+#### Why Runnables Exist:
+- 2022: ChatGpt, Google, Meta -> API LLM dena start kar diye
+- Langchain Team aisa framework -> kisi company ke API se easily baat kar sake-> classes banaye waise hi 
+- PDF Reader if create -> task kafi hai
+- PDF Load -> Split into parts (pages) -> Embedding Generate -> DB store -> Retriever (relevant chunk nikalega) -> LLM -> Get response -> Parse -> User
+- Apart from LLM talk, there are many different task to be performed
+- Langchain team decide for other task/parts to create LLM application. Ex. document loader, vector DB, split ka componenet, Output Parser : Helper Classes
+- Now as a developer can pick such component connect and build your application : Minimum Lines-
+##### Langchain Team Eureka Finding
+ - Every LLM application has some fixed sequence of task
+- Example: Prompt -> LLM model initially manually : Pipeline create kiya: 
+- Automate this task with Build in Function Chains X(llm,prompt) -> X.run() -> direct result
+- Simple Chain prompt | llm : SimpleChain import
+- Similarly: Retrieal + Query -> Prompt -> LLM: Ek New Chain Create : Retrieval QA Chain
+- Langchain Team: Kafi chains banaye based on usecases
+    - was doing chain = prompt | llm indirectly using chains below
+    - LLMChain (LLM, Prompt) is components ke functions ko ek new function mein daalna
+    - SequentialChain
+    - SimpleSequential Chain: Prompt -> LLM1 -> LLM2 -> aise kuch
+##### Problems:
+- Langchain created a lot of chains
+    - Codebase bada hogaya team ka
+    - AI engineer couln't understand which chain to learn and use
+-  Langchain Team understood that the components need to be redevelop so that they can interact with each other seamlessly chains mein 
+- Runnables were used in creating this component (LLM, Prompt, Parser, Retriver)
+
+#### What are Runnables
+- Unit of work: Har runnable ka kaam hota (input dete ho process karta output deta)
+- Every Runnable follow common interface : same set of methods ex. invoke() -> output, batch(multiple input process) -> multiple output, stream()
+- Can connect Runnable easily since same interface
+    - R1 - R2 -> connect R1 output automatically R2 input work
+- Workflow created after joining R1 R2 R3 and R4, R5 both workflows are runnable hoga matlab (R1,R2,R3) - connect (R4,R5) easily 
+
+#### Runnables Types
+- Task Specific Runnables
+    - Langchain core components that have been converted into Runnables so they can used in pipelines
+    - Perform task-specific operation like LLM calls, Parsers 
+    - Example: ChatOpenAI, PromptTemplate, Retriever
+- Runnable Primitives
+    - Aise runnables jo task specific runnables ko connect karte hai
+    - Orchestrate execution by defining how different Runnables interact (sequentially, parallelt,conditionally etc)
+    - Example:
+        - Runnable Sequence : Runs steps in order ( LCEL: Expression | operator)
+        - Runnable Parallel
+        - Runnable Lambda (wrap python function into Runnables)
+        - Runnable Branch (Implement Conditional execution if-else logic)
