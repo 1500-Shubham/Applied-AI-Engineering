@@ -241,3 +241,38 @@
         - Runnable Parallel
         - Runnable Lambda (wrap python function into Runnables)
         - Runnable Branch (Implement Conditional execution if-else logic)
+
+
+# RAG: Based Application
+- Chatbots - Chatgpt:
+    - Ask data with currentAffairs, PersonalData, company document : ChatGpt wont be able to as it has not seen data
+    - RAG Based application help
+- LLM -> External Knowledge Base Provide and ask queries
+- combine information retrieval (from knowledge base use as a context) + language generation 
+- Benefits:
+    - Better Privacy : Without uploading document ask questions
+    - No limit of document size
+    - Use up to date information
+##### Components of RAG Based:
+- Document Loader
+- Text Splitters
+- Vector Databases
+- Retrievers
+
+## DocumentLoaderComponent
+- langchain_community package
+- Concept: component in langchain used to load data from other sources in standarized formal (usually Document objects), which can be used for chunking, embedding, retrieval and generation
+- pdf,txt,db,s3 -> data -> Document Object format laaya
+- Document object (page_content='' and metadata='')
+- Sabse jyada use components
+    - Text Loader
+    - PyPDFLoader : PDf with text works best, if images and all other pdf loaders (PDF's with table column: PDF Plumber)
+    - DocumentLoader: Can be used along with other Loaders 
+        - load() this return list of Document Object
+        - use lazy_load(): dealing with large documents: return generator one document at a time load karega memory 
+        - fetched one at a time when needed 
+
+    - WebBaseLoader
+        - works good with html webpage static ho
+        - limitation: javascipt kam ho dynamic type
+    - CSV Loader
