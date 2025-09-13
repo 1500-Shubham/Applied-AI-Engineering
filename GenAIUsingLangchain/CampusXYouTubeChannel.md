@@ -276,3 +276,46 @@
         - works good with html webpage static ho
         - limitation: javascipt kam ho dynamic type
     - CSV Loader
+
+    ## Text Splitting
+    - Text Bigger into chunks that LLM can easily handle effectively
+    - LLM: Context length 50k token: PDF -> Summarise
+        - 1Lakh word : break semantic perform well 
+        - RCB - embeddin1
+        - CSK - embedding2
+        - Query - embedding match
+    - search, embedding, summarization and optimzing computational resources (like memory efficient and allow better parallelization)
+    - Length Based Splitter
+        - decide chunks size before hand 50 words each chunks
+        - Problem: fixed decide then paragraph bich se kat gaya sense chala gaya
+        - chunk size
+        - chunk overlap - 2 chunks bich mein overlap kitne character ks
+    - Text Structure
+        - Hierachy of structuring
+             - paragraph -> Lines -> words -> characters
+        - Use this hierachy trick
+        - separators decide 
+            - paragraph \n\n
+            - line \n
+            - text 'space'
+            - character ''
+        - this splitter first try(chunks size jaha se satisfy ho jaye) from paragraph, if not possible then line aise hi aage recursively 
+    - Document Structure Based
+        - if document consist of text which is not normal example document with python code: having class, def, loops aise 
+        - python code split karne ke liye different separators
+            - splitter
+            - \nclass
+            - \ndef,
+            - paragraph, line, words, character
+        - its an extension of text based structure with more complex text inside a document
+        -languages supported : Python , markdown, etc
+    - Semantic Meaning
+        - under experiment: code wrote just chatgpt for more 
+        - Decision for splitting not based on length of text or text structure
+        - Use meaning of text: if meaning different then only woh split kareg
+        - Each line ka embedding nikalta 
+        e1,e2,e3,e4 then compare similarity e1,e2 hai toh ek saath rakh lega e3 and e4 ek saath woh lines.
+        - Works on this priciple
+        - e1=0.3
+        - e2=0.4
+        - calculate standard deviation and have threshold amount in code realted to sd.
