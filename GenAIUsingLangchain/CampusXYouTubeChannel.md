@@ -353,3 +353,46 @@
     - ALL vectors store shares same fucntion in langchain 
 - Chroma Vector Store: Code directly under vector store for all functions
     - User -> multiple Database -> multiple Table/Collection -> multiple Doc(embedding and metadata)
+
+## Retrievers
+- A component in Langchain fetches relevant document from a datasource(vector store or api) in response to user query (now we have document)
+- Scan all document in datasrouce and see which documents are relevant to query
+- Multiple types of retrievers
+- All retrievers are runnables
+    - can integrate retrivers in chain just like model prompt query etc.
+- Types Of Retrievers
+    - Category1: Based on DataSource
+        - Wikipedia : API to fetch relevant content for a given query
+            - Return them as Langchain Document object
+            - Keyword matching ho raha not semantic wala scence
+        - VectorStore
+            - retriever is created using vector store itself
+            - but vector store itself was giving similarity search 
+            - but strategy different chahte toh retriever search toh perform kar sakte
+            - also retriever object is runnable can be integrated in chains
+        - Archieve (website pe research paper scan)
+    - Category2: Based on Search Strategy of Retriever
+        - Simple: Search type= similarity
+            - similarity_retriever = vectorstore.as_retriever(search_type="similarity", search_kwargs={"k": 5})
+        - MMR (Maximum marginal relevance)
+            - how can we pick results that are not only relevant to search query but also different from each other
+                - pich most relevant to first query
+                - then second most relevant to query but least similar to already existed docs
+            - reduce reduncacy to search result(saare result apas mein similar nahi honge different perspective )
+            - retriever = vectorstore.as_retriever(
+            search_type="mmr",
+            - if we want relevant(similarity wala) + diverse perspective
+            then use mmr search      
+        - Multi Query 
+            - sometimes a single query might not capture all the ways information is phrased in your documents
+            - query ambiguos -> search bekar relevant docs ka
+            - Query Vague -> LLM to generate multiple semantic version of my query
+            - now un queries pe documents layega
+        - Contextual Compression
+            - Advanced retrieval that improves quality by compressing documents after retrieval- keeps only relevant content based on user query
+            - Normal retriever return entire paragraph
+            - contextual compression -> only relevant part dega
+            - use trimming with the help of LLM (after retriver generate D1 and D2 based on query) then LLM as compressor takes(D1 and D2 and trim based on query)
+        
+
+
