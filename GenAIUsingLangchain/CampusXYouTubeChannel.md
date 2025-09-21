@@ -277,7 +277,7 @@
         - limitation: javascipt kam ho dynamic type
     - CSV Loader
 
-    ## Text Splitting
+## Text Splitting
     - Text Bigger into chunks that LLM can easily handle effectively
     - LLM: Context length 50k token: PDF -> Summarise
         - 1Lakh word : break semantic perform well 
@@ -319,3 +319,37 @@
         - e1=0.3
         - e2=0.4
         - calculate standard deviation and have threshold amount in code realted to sd.
+
+## Vector Stores VS Vector Database
+- Why needed?
+    - Website already build using normal DB
+        - Want to add movie recommendation when user search for a movie, suggest some more movies
+        - How to build, idea: keyword match between two movies (director, actor, genre)
+            - Problem: (fields same : keyword match) still recommendation wrong
+            - Keywords match nahi hoga but still movie can be more or less same
+        - Best idea: Both movies ka stories match kar lo instead of keywords: Compare similarity 
+        - 2 pieces of text compare similarity: semantic meaning: use NLP: document -> embedding(vectors) and compare cosine similarity
+            - 2 vectos mag and angle: Calculate angular distance
+        - Challenges: 
+            - 1: generate movies embedding vector, 2: then store these vector(these vector cannot be stored in relational DB, different type of databases needed) 3: Semantic search for query: all vector dekhna padega: Computational heavy for each movie complete vector list dekh rahe : Need intelligent semantic search
+        - Help: Vector Store help
+ - Vector store is a system designed to store and retrieve data represented as vector (ex: embedding of text into vectors)
+    - Features:
+    - Storage of vectors: vector + metadata(id, name yeh bhi store kar sakte)
+    - Similarity Search: retireve the vectors similar to query vector fast
+    - Indexing: Enables fast similarity seach on high dimenstion vector like in normal DB search operation faster
+        - 10 lakhs vectors the (On)
+        - create 10 clusters with each 1 lakh vectors in each and calculate centroid of each cluster: then simply compare query vector similar to centroid and perform in 1 lakh vector instead of 10 lakh
+    - CRUD operations: for vectors
+- Use cases: Image/Multimedia search, RAG, Semantic Search (indirectly vectors hai of data)
+- Vector Store vs Vector Database
+    - Difference: Vector Store is a library or service system (storage and retrievel of vectors features provide)
+    - If add more features like ACID propertity of database, backup and restore: Converted to Vector Database
+    - Vector Database is effectively a vector store with extra database feature 
+- Chroma, Pinecone
+    - from documents from text
+    - add documetns add text
+    - similarity search (query, k=)
+    - ALL vectors store shares same fucntion in langchain 
+- Chroma Vector Store: Code directly under vector store for all functions
+    - User -> multiple Database -> multiple Table/Collection -> multiple Doc(embedding and metadata)

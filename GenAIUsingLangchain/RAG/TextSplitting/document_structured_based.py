@@ -31,6 +31,7 @@ else:
 # Initialize the splitter
 splitter = RecursiveCharacterTextSplitter.from_language(
     language=Language.PYTHON,
+    # languages : Python , markdown
     chunk_size=300,
     chunk_overlap=0,
 )
