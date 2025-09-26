@@ -433,3 +433,7 @@
     - Augmentation : Query + Retrived Data -> Prompt create, LLM knowledge pe apna knowledge add
         - Prompt Create : Query + Context add karke
     - Generation: LLM uses its in context learning repsonse deta
+
+## RAG : Evaluate Strategy (Optional)
+- Ragas : Libraries hai (metrics honge output ko compare and check karne mein)
+- 
