@@ -259,7 +259,7 @@
 - Vector Databases
 - Retrievers
 
-## DocumentLoaderComponent
+### DocumentLoaderComponent
 - langchain_community package
 - Concept: component in langchain used to load data from other sources in standarized formal (usually Document objects), which can be used for chunking, embedding, retrieval and generation
 - pdf,txt,db,s3 -> data -> Document Object format laaya
@@ -277,7 +277,7 @@
         - limitation: javascipt kam ho dynamic type
     - CSV Loader
 
-## Text Splitting
+### Text Splitting
     - Text Bigger into chunks that LLM can easily handle effectively
     - LLM: Context length 50k token: PDF -> Summarise
         - 1Lakh word : break semantic perform well 
@@ -320,7 +320,7 @@
         - e2=0.4
         - calculate standard deviation and have threshold amount in code realted to sd.
 
-## Vector Stores VS Vector Database
+### Vector Stores VS Vector Database
 - Why needed?
     - Website already build using normal DB
         - Want to add movie recommendation when user search for a movie, suggest some more movies
@@ -354,7 +354,7 @@
 - Chroma Vector Store: Code directly under vector store for all functions
     - User -> multiple Database -> multiple Table/Collection -> multiple Doc(embedding and metadata)
 
-## Retrievers
+### Retrievers
 - A component in Langchain fetches relevant document from a datasource(vector store or api) in response to user query (now we have document)
 - Scan all document in datasrouce and see which documents are relevant to query
 - Multiple types of retrievers
@@ -395,4 +395,41 @@
             - use trimming with the help of LLM (after retriver generate D1 and D2 based on query) then LLM as compressor takes(D1 and D2 and trim based on query)
         
 
+## RAG : Actual Definition
 
+### Why?
+-  Query(Prompting) -> LLM -> Response (Store Parametric Knowlege Store)
+- Situations when this prompting wont work
+    - Private data of company : Query answer nahi dega pretraining time data nahi hai
+    - Today news of india: Knowledge cut off date hota kab last time trained hua model
+    - Halucination of model: gadbad response dena suru karta
+-  Solution:
+    - 1. Fine-Tuning : Pretrained model utha ke wapas train on smaller set of data domain specific
+        - Supervised fine tuning : prompt and desired output dete model ko
+        - continued pretraining : unsupervised
+        - LORA wager bhi tha 
+        - Halucination reduce training time tricky prompt-> I dont know output ho
+    - Fine Tuning Problem: 
+        - Big LLM Model again train computational expensive
+        - Domain where new information daily aa rhaa : dont use fine tuning 
+    - 2. In Context Learning: core capability of LLM where model learns to solve a task purely by seeing example in the prompt(thode examples input toh output yeh hoga aisa examples) - without updating its weights
+    - 3. RAG:  Instead of example(enhancement of in context learning) inside prompt: now we will send prompt + Context(extra information like lecture ka slides de diya) and then ask questions on that
+        - Now LLM uses its trained parameters + RAG Context as new prompt and get response
+### How? RAG Works
+- Fine Tuning comparision easier hai : No need to update parameters of model
+- Build in 4 Steps
+    - Indexing : External Knowledge base create - context create (require to solve query)
+        - Documentation Ingestion: Load source data into memory local : Langchain Loaders Use
+        - Text Chunking: Break large documents into small meanigful chunks: Text Splitter Langchain
+            - LLM ko direct pura bada docuemnt nahi bhej sakte uska prompt ke context ka size hota
+            - Also chote docs pe semantic search ache se hota hai
+        - Embedding Generation : Convert each chunks into dense vector : Tools like OpenAIEmbedding 
+        baad mein search karenge query toh semantic searching hoga vector comparision mein
+        - Storage in Vector Store like Chroma, FAISS
+        - Use this vector store as external knowledge base
+    - Retrieval : Query samjhte ho aur external knowledge se chungs late jo help karenge query answer mein
+        - Goal: Query basic - vector store se select best chunk
+        - Semantic Search : Embedding similarity type kar raha
+    - Augmentation : Query + Retrived Data -> Prompt create, LLM knowledge pe apna knowledge add
+        - Prompt Create : Query + Context add karke
+    - Generation: LLM uses its in context learning repsonse deta
