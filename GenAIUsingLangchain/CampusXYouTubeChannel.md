@@ -436,4 +436,110 @@
 
 ## RAG : Evaluate Strategy (Optional)
 - Ragas : Libraries hai (metrics honge output ko compare and check karne mein)
-- 
+
+# AI Agents 
+- LLM : Reasoning and Language Generation 
+    - Not Good At
+    - Access live data
+    - do reliable math
+    - call api run code, interact with database
+- Tools are function to execute a certain task : These function can interact with LLM
+- LLM - Tools(Python API that is packaged in a way the LLM can understand and call when needed) -> Live Interact : LLM can perform task now 
+
+## Agent - LLM + Tools
+- Ai agent LLM powered system that can autonously think,decide(LLM use) and take action (use TOOLS)
+
+
+## Tools Creation
+- Attributes - tool. name,description,args
+- These are runnables : use invoke function
+- Build In Tools 
+    - its prebuild, dont need to write function logic just import and use
+    - DuckDuckGoSearchRun = Web Search
+    - Wikipedia Query Run 
+    - Python REPL Tool - run Python code
+    - ShellTool
+    - RequestGetTool - HTTP Get Request
+    - GmailSend, Slack, SQLDatabaseQuery
+- Custom Tools 
+    - My own function or APIs - connect to my database 
+    - Method- 1 from langchain_core.tools import tool 
+        - Use type hinting for input types
+        - @tool (my function (input)->output) then simply call this function via llm as this is runnable
+    - Method- 2 using Structured Tool & Pydantic
+        - Special type of tool where input to the tool follows a strcutred schema defined using Pydantic Modl
+        - use BaseModel and created StructureTool
+            - func, name, description ,arg_schema
+    - Method-3 BaseTool Class create custom tool
+        - BaseTool is the abstract base class for all tools in Langchain. All other tools @tool and Strcutred Tool are build on top of Base Tool
+        - How tool behave in langchain are defined here
+
+### Toolkits
+- A Collection of tools for convenience and resusability 
+    - ex. add , multiple @ tool
+    - Create Toolkit Class -> get_tools methods return array of tools
+
+## Tool Calling
+- Only LLM suggest the tool with the input not LLM result nahi layega, otherwise risky ho jayega control, LLM advise mang rahe
+- Tool Binding - register tools with LLM, now LLM know what tools are available, what each tools do, and what input format to use
+    - Tool, name description, input schema
+    - llm.bind_tools([@tools])
+    - not all llms have this tool binding capability , chatgpt ok hai
+- LLM doesnt actually run the tool, it just suggest the tool and the input arguments. Actual execution is handled by Langchain or you
+    - LLM Output -> JSON diya {tool name , and args a,b} -> Langchain mein call this tool with variables
+    - LLM.invoke -> tool_calls list
+
+## Tool Execution 
+- LLM output of tool_calls now execute using Langchain
+- actual Python function tool is run using input arguments that LLM suggested during tool calling
+- Tool.invoke(ToolCall-resultFromLLM Directly Pass) : Return Tool Message
+- Tool.invoke(ToolCall) -> Tool Message which LLM can understand
+
+- Messages Now 
+    - Human Message
+    - AI Message
+    - Tool Message
+    - Can store in variable and give to llm to invoke : Context de rahe llm ko for chatting type
+
+- Injected Tool Argument
+    - if your query need two tool ex. usd to inr rate then 2nd tool need to use that for multiplying 10*result 
+    - since llm only suggest tools there is a problem for the 2nd tool as it depends on result from 1st
+    - Solve
+        - @Tool 2nd Method (conversion rate: Annotated[float,InjectedtoolArg])
+        - Telling LLM that I will inject the message not the LLM
+
+## AI Agent - NAHI HUA
+- ToolCreation,Binding,Calling
+- Because we wrote the code for binding and calling execution manually executed tha
+
+## AI Agent Proper
+- Intelligent system + LLM + Tools API
+- Multiple Steps reason 
+- End Goal Hota Context Maintain karte rahe
+- Characteristics
+    - Goal Driven
+    - Autonomous Planning
+    - Tools Using
+    - Context aware memory maintain
+    - Adaptive if API fails no data
+### Agents In Langchain : FIle
+- Components 
+    - Tools
+    - LLM 
+    - Agent Create time using design pattern like react, search and think aisa kuch kuch
+    - create_react_agent : Agent - Reasoning karta
+    - AgentExecutor - actually do execution, now manually nahi karna
+        - verbose on then print what agent is thiking
+    - langchain hub - create prompt pull (react agent that do reasoning and react)
+    - Creating agent : llm, tools, prompt 
+        - Wrap it with agent executor
+- ReAct Design Pattern
+    - Thought - Action - Observation Step Follow
+    - Reasoning + Acting 
+    - Allows LLM to interleave internal reasoning Thoughts with external actions(like use tool) in structured multi step process 
+    - example: Can you tell me the population of capital of france
+        - Step by step 1st capital search using tool
+        - Then again tool call for population
+- Agent and Agent Executor
+    - Agent Exectutor orchastrate the loop (Thoughts Action Observation)
+    - Agent sends Search tools and input to agent exectutor : Action perform karke laata
